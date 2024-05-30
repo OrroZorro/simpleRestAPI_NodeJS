@@ -1,6 +1,9 @@
 const express = require('express');
+const ejs = require('ejs'); 
 
 const app = express();
+app.set('view engine', 'ejs'); 
+app.set('views', __dirname + '/views');
 app.use(express.json());
 
 const products = [
@@ -31,12 +34,12 @@ const products = [
 ]
 
 app.get('/', (req,res)=>{
-    res.send('Hello')
+    res.render('info')
 })
 
-app.get('/products', (req,res)=>{
-    res.json(products);
-})
+app.get('/products', (req, res) => {
+    res.render('index', { products: products });
+});
 
 app.post('/products', (req,res)=>{
     const { name, price, quantity, active } = req.body
